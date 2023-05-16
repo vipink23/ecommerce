@@ -24,6 +24,9 @@ app.listen(port, () => {
 main().catch(err => console.log(err));
 app.use(express.json())
 const productRouter= require('./Routes/productRoutes')
-app.use('/product',productRouter)
+app.use('/products',productRouter)
+
+const categoryRouter = require('./Routes/categoryRoutes')
+app.use('/category',categoryRouter)
 
 
