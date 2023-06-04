@@ -1,4 +1,4 @@
-const mongoose=require('mongoose')
+import mongoose from "mongoose"
 
 const productSchema=new mongoose.Schema({
     name:{
@@ -36,4 +36,6 @@ const productSchema=new mongoose.Schema({
     }
 
 })
-module.exports =mongoose.model('products',productSchema)
+
+const ProductModel=mongoose.model('products', productSchema)
+export default ProductModel
