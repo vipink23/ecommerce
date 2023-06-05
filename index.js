@@ -3,6 +3,7 @@ import express from 'express'
 import ProductRouter from './Routes/productRoutes.js'
 import categoryRouter from './Routes/categoryRoutes.js'
 import userRouter from './Routes/userRouter.js'
+import cartRouter from './Routes/cartRoutes.js'
 const app = express()
 import cors from 'cors'
 app.use(cors())
@@ -28,5 +29,6 @@ async function main() {
 app.use('/products',ProductRouter)
 app.use('/category',categoryRouter)
 app.use('/user',userRouter)
+app.use('/cart',cartRouter)
 
 
