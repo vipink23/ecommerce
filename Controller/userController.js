@@ -50,8 +50,8 @@ const UserLogin = async (req, res) => {
             id: user.id,
           },
         },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1m" }
+        process.env.ACCESS_TOKEN_SECRET
+        // { expiresIn:  }
       );
       res.json({ accesstoken, user, status: true });
     } else {

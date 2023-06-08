@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 
 const validateToken = async (req, res, next) => {
@@ -9,11 +8,12 @@ const validateToken = async (req, res, next) => {
       token = authHeader.split(" ")[1];
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err) {
-          res.send("user is not Autherised");
+          // res.send("user is not Autherised",err);
+          console.log("error", err);
         } else {
           if (decoded && decoded.user) {
             req.user = decoded.user;
-            console.log(decoded.user);
+
             next();
           } else {
             res.send("Invalid token payload");
