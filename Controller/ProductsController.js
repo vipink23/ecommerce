@@ -9,6 +9,7 @@ const ProductGet = async (req, res) => {
     res.send("error" + err);
   }
 };
+
 const ProductGetById = async (req, res) => {
   try {
     const product = await ProductModel.findById(req.params.id).populate(

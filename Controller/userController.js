@@ -5,7 +5,6 @@ import Jwt from "jsonwebtoken";
 const UserRegister = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
     if (!username || !email || !password) {
       res.send("all fields are mandatory");
       return;
@@ -36,6 +35,7 @@ const UserRegister = async (req, res) => {
 const UserLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
+   
     if (!email || !password) {
       res.send("all field is required");
     }
@@ -69,4 +69,95 @@ const userGet = async (req, res) => {
   }
 };
 
-export default { UserLogin, UserRegister, userGet };
+
+const addAddress = async (req, res) => {
+  try {
+    const { userId, name, mobileNumber, address, pincode, locality, state } = req.body;
+    console.log(req.body, 'reqqq body');
+
+    if (!userId || !name || !mobileNumber || !address || !pincode || !locality || !state) {
+      // console.log('Fields are missing:', { userId, name, mobileNumber, address, pincode, locality, state });
+      res.send('all fields are mandatory');
+      return;
+    }
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      console.log('User not found:', userId);
+      res.send('user not found');
+      return;
+    }
+
+    if (user.address.length >= 3) {
+      console.log('User has reached the maximum limit of addresses');
+      res.send('user has reached the maximum limit of addresses');
+      return;
+    }
+
+    console.log('All fields are present:', { userId, name, mobileNumber, address, pincode, locality, state });
+    const newAddress = {
+      name,
+      mobileNumber,
+      address,
+      pincode,
+      locality,
+      state
+    };
+
+    console.log('New address:', newAddress);
+
+    user.address.push(newAddress);
+    await user.save();
+    res.json({ user, status: true });
+
+  } catch (error) {
+    res.send('error' + error);
+  }
+};
+
+const addressGet = async (req, res) => {
+  try {
+    const userId = req.params.id; // Assuming you have middleware that sets req.user with the logged-in user's information
+    // console.log(userId,' user idssss');
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      res.send("User not found");
+      return;
+    }
+
+    const addresses = user.address;
+    console.log(addresses);
+    res.json({ addresses });
+  } catch (err) {
+    res.send("Error: " + err);
+  }
+};
+
+const deleteAddress = async (req, res) => {
+  try {
+    const { userId, addressId } = req.query;
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      res.send('user not found');
+      return;
+    }
+
+    const addressIndex = user.address.findIndex((address) => address._id.toString() === addressId);
+    if (!addressIndex ) {
+      res.send('address not found');
+      return;
+    }
+    user.address.splice(addressIndex, 1);
+    await user.save();
+    res.send('address deleted successfully');
+  } catch (error) {
+    res.send('error: ' + error);
+  }
+};
+
+
+
+
+export default { UserLogin, UserRegister, userGet,addAddress,addressGet,deleteAddress };

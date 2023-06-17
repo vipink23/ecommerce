@@ -6,7 +6,7 @@ const CartItem = async (req, res) => {
     const { user, cartItem, subtotal } = req.body;
     console.log(cartItem);
     console.log(user,'userrrrrrrrrrr');
-    const cartlist = await CartModel.findOne({user });
+    const cartlist = await CartModel.findOne({user});
     if(cartlist){
       cartlist.cartItem=cartItem;
       cartlist.subtotal=subtotal;
@@ -28,8 +28,6 @@ const CartItem = async (req, res) => {
     res.send({ message: "Internal server error" });
   }
 };
-
-
 
 const getCartItems = async (req, res) => {
   try {
