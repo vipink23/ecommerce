@@ -117,8 +117,7 @@ const addAddress = async (req, res) => {
 
 const addressGet = async (req, res) => {
   try {
-    const userId = req.params.id; // Assuming you have middleware that sets req.user with the logged-in user's information
-    // console.log(userId,' user idssss');
+    const userId = req.params.id; 
 
     const user = await UserModel.findById(userId);
     if (!user) {
