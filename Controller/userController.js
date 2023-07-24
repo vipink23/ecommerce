@@ -73,7 +73,7 @@ const userGet = async (req, res) => {
 const addAddress = async (req, res) => {
   try {
     const { userId, name, mobileNumber, address, pincode, locality, state } = req.body;
-    console.log(req.body, 'reqqq body');
+    // console.log(req.body, 'reqqq body');
 
     if (!userId || !name || !mobileNumber || !address || !pincode || !locality || !state) {
       // console.log('Fields are missing:', { userId, name, mobileNumber, address, pincode, locality, state });
@@ -118,15 +118,13 @@ const addAddress = async (req, res) => {
 const addressGet = async (req, res) => {
   try {
     const userId = req.params.id; 
-
     const user = await UserModel.findById(userId);
     if (!user) {
       res.send("User not found");
       return;
     }
-
     const addresses = user.address;
-    console.log(addresses);
+    // console.log(addresses);
     res.json({ addresses });
   } catch (err) {
     res.send("Error: " + err);

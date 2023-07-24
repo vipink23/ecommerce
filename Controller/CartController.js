@@ -4,8 +4,8 @@ import CartModel from "../models/Cartproduct.js";
 const CartItem = async (req, res) => {
   try {
     const { user, cartItem, subtotal } = req.body;
-    console.log(cartItem);
-    console.log(user,'userrrrrrrrrrr');
+    // console.log(cartItem);
+    // console.log(user,'userrrrrrrrrrr');
     const cartlist = await CartModel.findOne({user});
     if(cartlist){
       cartlist.cartItem=cartItem;
